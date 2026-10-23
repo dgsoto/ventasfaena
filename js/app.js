@@ -1,4 +1,7 @@
-
+/**
+ * VentasFaena - App principal
+ * Offline-first PWA + carrito + WhatsApp
+ */
 
 const WHATSAPP_NUMBER = "56966840210"; // sin + ni espacios
 const BANK = {
@@ -404,12 +407,22 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("cart-btn").addEventListener("click", () => {
     document.getElementById("cart-drawer").classList.remove("translate-x-full");
     document.getElementById("cart-overlay").classList.remove("hidden");
-    setTimeout(() => document.getElementById("cart-overlay").classList.remove("opacity-0"), 10);
+    // No bloqueamos body.overflow aquí: el overlay usa pointer-events y el drawer es fixed
+    // Bloquear overflow solo si el modal de producto no está abierto
+    requestAnimationFrame(() => {
+      document.getElementById("cart-overlay").classList.remove("opacity-0");
+    });
   });
   const closeCart = () => {
     document.getElementById("cart-drawer").classList.add("translate-x-full");
     document.getElementById("cart-overlay").classList.add("opacity-0");
-    setTimeout(() => document.getElementById("cart-overlay").classList.add("hidden"), 300);
+    setTimeout(() => {
+      document.getElementById("cart-overlay").classList.add("hidden");
+      // Asegurar que el body pueda scrollear de nuevo
+      if (document.getElementById("product-modal").classList.contains("hidden")) {
+        document.body.style.overflow = "";
+      }
+    }, 300);
   };
   document.getElementById("close-cart").addEventListener("click", closeCart);
   document.getElementById("cart-overlay").addEventListener("click", closeCart);

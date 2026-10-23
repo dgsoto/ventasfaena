@@ -1,12 +1,22 @@
 /* Custom styles for VentasFaena - Mobile first & responsive */
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  overscroll-behavior-y: contain;
+
+/* Base: permitir scroll vertical natural con un dedo */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
 }
 
-/* Prevent horizontal overflow on all devices */
-html, body { max-width: 100vw; overflow-x: hidden; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100%;
+  /* Scroll nativo del navegador — NO overflow-x:hidden en body (rompe scroll en móvil) */
+  overflow-y: auto;
+  overflow-x: clip; /* clip no bloquea el gesto vertical como hidden */
+  -webkit-overflow-scrolling: touch; /* momentum scroll iOS */
+  overscroll-behavior-y: auto; /* permite el bounce natural */
+  touch-action: pan-y pinch-zoom; /* un dedo = scroll vertical */
+}
 
 /* Touch-friendly */
 .touch-manipulation { touch-action: manipulation; }
@@ -16,18 +26,27 @@ button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* Filtros de categoría: solo scroll horizontal, no robár el vertical de la página */
+#category-filters {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Product card image carousel subtle fade */
 .product-card .img-wrap {
   position: relative;
   overflow: hidden;
   aspect-ratio: 1;
   background: #f1f5f9;
+  /* Evitar que el área de imagen capture gestos de scroll de la página */
+  touch-action: pan-y;
 }
 .product-card .img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: opacity 0.4s ease;
+  pointer-events: none; /* la imagen no captura el dedo; el click va al contenedor */
 }
 .product-card .img-wrap img.fade-out { opacity: 0; }
 
@@ -39,6 +58,7 @@ button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
   transform: translateX(-50%);
   display: flex;
   gap: 4px;
+  pointer-events: none;
 }
 .dots span {
   width: 6px;
@@ -97,8 +117,18 @@ button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
 }
 
 /* Toast animation */
+#toast {
+  pointer-events: none;
+}
 #toast.show {
   opacity: 1;
+}
+
+/* Overlay del carrito: cuando está cerrado no debe capturar toques */
+#cart-overlay {
+  pointer-events: none;
+}
+#cart-overlay:not(.hidden) {
   pointer-events: auto;
 }
 
@@ -130,4 +160,9 @@ button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
 :focus-visible {
   outline: 2px solid #0ea5e9;
   outline-offset: 2px;
+}
+
+/* Asegurar que el contenido principal no bloquee el scroll */
+main, #products-grid {
+  touch-action: pan-y;
 }
