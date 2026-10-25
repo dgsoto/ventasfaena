@@ -158,16 +158,18 @@
         </button>
       </div>
       <div class="p-5">
+        <div id="modal-tags" class="flex flex-wrap gap-1.5 mb-2 hidden"></div>
         <h3 id="modal-title" class="font-bold text-xl"></h3>
-        <p id="modal-price" class="text-primary-600 font-bold text-2xl mt-1"></p>
+        <div id="modal-price" class="mt-1"></div>
         <p id="modal-desc" class="text-slate-600 mt-3 text-sm"></p>
+        <div id="modal-video"></div>
         <div class="mt-4 flex items-center gap-3">
           <div class="flex items-center border rounded-xl">
-            <button id="modal-minus" class="px-3 py-2 text-lg font-bold">−</button>
+            <button id="modal-minus" class="px-3 py-2 text-lg font-bold min-h-[44px] touch-manipulation">−</button>
             <span id="modal-qty" class="px-4 font-medium">1</span>
-            <button id="modal-plus" class="px-3 py-2 text-lg font-bold">+</button>
+            <button id="modal-plus" class="px-3 py-2 text-lg font-bold min-h-[44px] touch-manipulation">+</button>
           </div>
-          <button id="modal-add" class="flex-1 bg-primary-600 hover:bg-primary-500 text-white font-semibold py-2.5 rounded-xl transition">
+          <button id="modal-add" class="flex-1 min-h-[44px] bg-primary-600 hover:bg-primary-500 text-white font-semibold py-2.5 rounded-xl transition touch-manipulation">
             Agregar al pedido
           </button>
         </div>

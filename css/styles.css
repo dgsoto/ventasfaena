@@ -166,3 +166,44 @@ button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
 main, #products-grid {
   touch-action: pan-y;
 }
+
+/* ── Producto agotado: gris ── */
+.product-card.is-soldout {
+  filter: grayscale(0.85);
+  opacity: 0.85;
+}
+.product-card.is-soldout button[disabled] {
+  pointer-events: none;
+}
+
+/* ── Etiquetas de promoción ── */
+.product-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 3px 7px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.tag-black-friday { background: #0f172a; color: #fbbf24; }
+.tag-cyber { background: #7c3aed; color: #fff; }
+.tag-oferta { background: #ef4444; color: #fff; }
+.tag-nuevo { background: #059669; color: #fff; }
+.tag-envio { background: #0284c7; color: #fff; }
+.tag-ultimo { background: #ea580c; color: #fff; }
+.tag-hot { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; }
+.tag-default { background: #64748b; color: #fff; }
+
+#modal-tags .product-tag {
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.modal-video iframe,
+.modal-video video {
+  display: block;
+  max-width: 100%;
+}

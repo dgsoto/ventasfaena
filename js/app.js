@@ -13,7 +13,74 @@ const BANK = {
 
 // Asegurar que PRODUCTS exista (defensivo para file:// o carga fallida)
 const PRODUCTS = window.PRODUCTS || [];
-const CATEGORIES = window.CATEGORIES || [...new Set(PRODUCTS.map(p => p.category))];
+// Solo productos activos en catálogo y categorías
+const ACTIVE_PRODUCTS = () => PRODUCTS.filter((p) => p.active !== false);
+const CATEGORIES =
+  window.CATEGORIES ||
+  [...new Set(ACTIVE_PRODUCTS().map((p) => p.category))];
+
+/** Etiquetas de promo → clase + texto */
+const TAG_META = {
+  "black-friday": { label: "Black Friday", cls: "tag-black-friday" },
+  "cyber-day": { label: "Cyber Day", cls: "tag-cyber" },
+  oferta: { label: "Oferta", cls: "tag-oferta" },
+  nuevo: { label: "Nuevo", cls: "tag-nuevo" },
+  "envio-gratis": { label: "Envío gratis", cls: "tag-envio" },
+  ultimo: { label: "¡Últimos!", cls: "tag-ultimo" },
+  hot: { label: "Hot", cls: "tag-hot" }
+};
+
+function renderTags(tags) {
+  if (!tags || !tags.length) return "";
+  return tags
+    .map((t) => {
+      const m = TAG_META[t] || { label: t, cls: "tag-default" };
+      return `<span class="product-tag ${m.cls}">${m.label}</span>`;
+    })
+    .join("");
+}
+
+function discountPct(p) {
+  if (!p.compareAtPrice || p.compareAtPrice <= p.price) return 0;
+  return Math.round((1 - p.price / p.compareAtPrice) * 100);
+}
+
+function priceHTML(p, size = "sm") {
+  const pct = discountPct(p);
+  if (pct > 0) {
+    return `
+      <div class="flex flex-wrap items-baseline gap-1.5 mt-1">
+        <span class="text-primary-600 font-bold ${size === "lg" ? "text-2xl" : ""}">${formatCLP(p.price)}</span>
+        <span class="text-slate-400 line-through text-xs ${size === "lg" ? "text-sm" : ""}">${formatCLP(p.compareAtPrice)}</span>
+        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">-${pct}%</span>
+      </div>`;
+  }
+  return `<p class="text-primary-600 font-bold mt-1 ${size === "lg" ? "text-2xl" : ""}">${formatCLP(p.price)}</p>`;
+}
+
+/** Detecta y embebe video (YouTube / Vimeo / MP4) */
+function videoEmbedHTML(url) {
+  if (!url) return "";
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+  if (yt) {
+    return `<div class="modal-video aspect-video w-full bg-black rounded-xl overflow-hidden mt-3">
+      <iframe class="w-full h-full" src="https://www.youtube.com/embed/${yt[1]}?rel=0" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>`;
+  }
+  const vim = url.match(/vimeo\.com\/(\d+)/);
+  if (vim) {
+    return `<div class="modal-video aspect-video w-full bg-black rounded-xl overflow-hidden mt-3">
+      <iframe class="w-full h-full" src="https://player.vimeo.com/video/${vim[1]}" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>`;
+  }
+  // MP4 / WebM directo
+  if (/\.(mp4|webm|ogg)(\?|$)/i.test(url) || url.includes("video")) {
+    return `<div class="modal-video w-full mt-3 rounded-xl overflow-hidden bg-black">
+      <video class="w-full max-h-64" controls playsinline preload="metadata" src="${url}"></video>
+    </div>`;
+  }
+  return "";
+}
 
 // ========== State ==========
 let cart = {};
@@ -82,12 +149,14 @@ function renderProducts() {
     return;
   }
 
-  let list = PRODUCTS.filter((p) => {
+  // Solo activos + categoría + búsqueda
+  let list = ACTIVE_PRODUCTS().filter((p) => {
     const matchCat = currentFilter === "Todos" || p.category === currentFilter;
     const matchSearch =
       !searchQuery ||
       p.name.toLowerCase().includes(searchQuery) ||
-      (p.description && p.description.toLowerCase().includes(searchQuery));
+      (p.description && p.description.toLowerCase().includes(searchQuery)) ||
+      (p.tags && p.tags.some((t) => t.toLowerCase().includes(searchQuery)));
     return matchCat && matchSearch;
   });
 
@@ -99,25 +168,35 @@ function renderProducts() {
   }
   noRes.classList.add("hidden");
 
-  const placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect fill='%23e2e8f0' width='400' height='400'/%3E%3Ctext fill='%2394a3b8' font-family='sans-serif' font-size='20' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3ESin imagen%3C/text%3E%3C/svg%3E";
+  const placeholder =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect fill='%23e2e8f0' width='400' height='400'/%3E%3Ctext fill='%2394a3b8' font-family='sans-serif' font-size='20' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3ESin imagen%3C/text%3E%3C/svg%3E";
 
   grid.innerHTML = list
     .map((p) => {
       const imgs = p.images && p.images.length ? p.images : [placeholder];
       const hasMulti = imgs.length > 1;
       const soldOut = p.stock !== undefined && p.stock <= 0;
+      const hasVideo = !!p.video;
+      const tagsHtml = renderTags(p.tags);
+
       return `
-      <article class="product-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition group" data-id="${p.id}">
-        <div class="img-wrap cursor-pointer" data-action="open">
+      <article class="product-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition group ${soldOut ? "is-soldout" : ""}" data-id="${p.id}">
+        <div class="img-wrap cursor-pointer relative" data-action="open">
           <img src="${imgs[0]}" alt="${p.name}" loading="lazy" class="main-img" data-idx="0" onerror="this.onerror=null;this.src='${placeholder}'" />
           ${hasMulti ? `<div class="dots">${imgs.map((_, i) => `<span class="${i === 0 ? "active" : ""}"></span>`).join("")}</div>` : ""}
-          ${soldOut ? `<div class="absolute inset-0 bg-black/50 flex items-center justify-center"><span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">AGOTADO</span></div>` : ""}
+          ${tagsHtml ? `<div class="absolute top-2 left-2 flex flex-col gap-1 z-10">${tagsHtml}</div>` : ""}
+          ${hasVideo && !soldOut ? `<div class="absolute bottom-2 right-2 z-10 bg-black/70 text-white rounded-full p-1.5 pointer-events-none" title="Tiene video"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>` : ""}
+          ${soldOut ? `<div class="absolute inset-0 bg-slate-900/55 flex items-center justify-center z-10"><span class="bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-full tracking-wide">AGOTADO</span></div>` : ""}
         </div>
         <div class="p-3">
           <p class="text-xs text-slate-500 font-medium">${p.category || ""}</p>
           <h3 class="font-semibold text-sm leading-snug mt-0.5 line-clamp-2">${p.name}</h3>
-          <p class="text-primary-600 font-bold mt-1">${formatCLP(p.price)}</p>
-          <button class="mt-2 w-full min-h-[44px] bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-white text-sm font-medium py-2.5 rounded-xl transition disabled:opacity-40 touch-manipulation" data-action="quick-add" ${soldOut ? "disabled" : ""}>
+          ${priceHTML(p)}
+          <button class="mt-2 w-full min-h-[44px] text-sm font-medium py-2.5 rounded-xl transition touch-manipulation ${
+            soldOut
+              ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+              : "bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-white"
+          }" data-action="quick-add" ${soldOut ? "disabled" : ""}>
             ${soldOut ? "Agotado" : "Agregar"}
           </button>
         </div>
@@ -125,11 +204,11 @@ function renderProducts() {
     })
     .join("");
 
-  // Multi-image subtle auto-rotate on hover (desktop) / light cycle on touch
+  // Multi-image subtle auto-rotate on hover (desktop)
   grid.querySelectorAll(".product-card").forEach((card) => {
     const id = card.dataset.id;
     const product = PRODUCTS.find((x) => x.id === id);
-    if (!product || !product.images || product.images.length < 2) return;
+    if (!product || !product.images || product.images.length < 2 || card.classList.contains("is-soldout")) return;
 
     const img = card.querySelector(".main-img");
     const dots = card.querySelectorAll(".dots span");
@@ -141,7 +220,10 @@ function renderProducts() {
       img.classList.add("fade-out");
       setTimeout(() => {
         img.src = product.images[idx];
-        img.onerror = function () { this.onerror = null; this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e2e8f0' width='400' height='400'/%3E%3C/svg%3E"; };
+        img.onerror = function () {
+          this.onerror = null;
+          this.src = placeholder;
+        };
         img.dataset.idx = idx;
         img.classList.remove("fade-out");
         dots.forEach((d, di) => d.classList.toggle("active", di === idx));
@@ -211,13 +293,16 @@ function updateCartUI() {
 // ========== Cart actions ==========
 function addToCart(id, qty = 1) {
   const p = PRODUCTS.find((x) => x.id === id);
-  if (!p || (p.stock !== undefined && p.stock <= 0)) return;
+  if (!p || p.active === false) return;
+  if (p.stock !== undefined && p.stock <= 0) {
+    toast("Producto agotado");
+    return;
+  }
   if (cart[id]) {
     cart[id].qty += qty;
   } else {
     cart[id] = { id, qty };
   }
-  // limit by stock if defined
   if (p.stock !== undefined) cart[id].qty = Math.min(cart[id].qty, p.stock);
   saveCart();
   toast(`Agregado: ${p.name}`);
@@ -242,24 +327,57 @@ function removeFromCart(id) {
 // ========== Modal ==========
 function openModal(id) {
   const p = PRODUCTS.find((x) => x.id === id);
-  if (!p) return;
+  if (!p || p.active === false) return;
   currentProduct = p;
   modalQty = 1;
+  const soldOut = p.stock !== undefined && p.stock <= 0;
+
   document.getElementById("modal-title").textContent = p.name;
-  document.getElementById("modal-price").textContent = formatCLP(p.price);
-  document.getElementById("modal-desc").textContent = p.description;
+  document.getElementById("modal-price").innerHTML = priceHTML(p, "lg");
+  document.getElementById("modal-desc").textContent = p.description || "";
   document.getElementById("modal-qty").textContent = "1";
 
+  // Tags en modal
+  const tagsEl = document.getElementById("modal-tags");
+  if (tagsEl) {
+    tagsEl.innerHTML = renderTags(p.tags);
+    tagsEl.classList.toggle("hidden", !p.tags || !p.tags.length);
+  }
+
+  // Video
+  const videoEl = document.getElementById("modal-video");
+  if (videoEl) {
+    videoEl.innerHTML = videoEmbedHTML(p.video);
+  }
+
+  // Botón agregar
+  const addBtn = document.getElementById("modal-add");
+  if (soldOut) {
+    addBtn.disabled = true;
+    addBtn.textContent = "Agotado";
+    addBtn.classList.add("opacity-50", "cursor-not-allowed");
+  } else {
+    addBtn.disabled = false;
+    addBtn.textContent = "Agregar al pedido";
+    addBtn.classList.remove("opacity-50", "cursor-not-allowed");
+  }
+
+  const imgs = p.images && p.images.length ? p.images : [];
   const carousel = document.getElementById("modal-carousel");
-  carousel.innerHTML = p.images
-    .map((src, i) => `<img src="${src}" alt="${p.name}" class="${i === 0 ? "active" : ""}" data-i="${i}" />`)
+  carousel.innerHTML = imgs
+    .map(
+      (src, i) =>
+        `<img src="${src}" alt="${p.name}" class="${i === 0 ? "active" : ""}" data-i="${i}" />`
+    )
     .join("");
 
-  if (p.images.length > 1) {
+  if (imgs.length > 1) {
     carousel.innerHTML += `
       <button class="carousel-nav prev" data-dir="-1" aria-label="Anterior">‹</button>
       <button class="carousel-nav next" data-dir="1" aria-label="Siguiente">›</button>
-      <div class="dots" style="bottom:12px">${p.images.map((_, i) => `<span class="${i === 0 ? "active" : ""}" data-dot="${i}"></span>`).join("")}</div>`;
+      <div class="dots" style="bottom:12px">${imgs
+        .map((_, i) => `<span class="${i === 0 ? "active" : ""}" data-dot="${i}"></span>`)
+        .join("")}</div>`;
   }
 
   document.getElementById("product-modal").classList.remove("hidden");
@@ -268,6 +386,9 @@ function openModal(id) {
 }
 
 function closeModal() {
+  // Pausar videos/iframes al cerrar
+  const videoEl = document.getElementById("modal-video");
+  if (videoEl) videoEl.innerHTML = "";
   document.getElementById("product-modal").classList.add("hidden");
   document.getElementById("product-modal").classList.remove("flex");
   document.body.style.overflow = "";
