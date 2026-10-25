@@ -437,27 +437,52 @@ function buildWhatsAppMessage() {
   return lines.join("\n");
 }
 
+function clearOrderUI() {
+  cart = {};
+  saveCart();
+  const noteEl = document.getElementById("order-note");
+  if (noteEl) noteEl.value = "";
+  const efectivo = document.querySelector('input[name="payment"][value="efectivo"]');
+  if (efectivo) {
+    efectivo.checked = true;
+    const bank = document.getElementById("bank-details");
+    if (bank) bank.classList.add("hidden");
+  }
+  localStorage.removeItem("vf_pending_order");
+}
+
 function sendWhatsApp() {
   if (getCartCount() === 0) return;
 
+  // Armar el mensaje ANTES de limpiar el carrito
+  const message = buildWhatsAppMessage();
+
   if (!navigator.onLine) {
-    // Guardar pedido pendiente
-    const pending = {
-      message: buildWhatsAppMessage(),
-      ts: Date.now()
-    };
-    localStorage.setItem("vf_pending_order", JSON.stringify(pending));
+    localStorage.setItem(
+      "vf_pending_order",
+      JSON.stringify({ message, ts: Date.now() })
+    );
     toast("Sin internet. El pedido se guardó. Cuando tengas señal, vuelve a presionar Enviar.", 4000);
     return;
   }
 
-  const text = encodeURIComponent(buildWhatsAppMessage());
+  const text = encodeURIComponent(message);
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
   window.open(url, "_blank");
 
-  // Opcional: limpiar carrito después de enviar
-  // cart = {}; saveCart();
-  toast("WhatsApp abierto. ¡Revisa el mensaje y envíalo!");
+  // Pedido enviado → limpiar para el siguiente
+  clearOrderUI();
+
+  // Cerrar el panel del pedido
+  const drawer = document.getElementById("cart-drawer");
+  const overlay = document.getElementById("cart-overlay");
+  if (drawer) drawer.classList.add("translate-x-full");
+  if (overlay) {
+    overlay.classList.add("opacity-0");
+    setTimeout(() => overlay.classList.add("hidden"), 300);
+  }
+
+  toast("¡Pedido enviado! El carrito quedó vacío para un nuevo pedido.");
 }
 
 // Intentar reenviar pendiente al volver online
