@@ -36,309 +36,309 @@ window.PRODUCTS = [
     category: "Alimentos",
     description: "Galleta Frac rellena de chocolate Costa...",
     images: ["https://i.ibb.co/8LmqTs7g/frac-chocolate.png"],
-    stock: 50,
+    stock: 10,
     active: true,
     tags: ["nuevo"]
   },
     {
     id: "frac-chocolate-frutilla",
     name: "Frac Chocolate y Frutilla Costa",
-    price: 590,
+    price: 1000,
     category: "Alimentos",
     description: "Galleta Frac Costa sabor chocolate y frutilla. Ideal para la colación.",
     images: [
       "https://i.ibb.co/HD4QrTKd/fracchocolate-y-frutilla.png"
     ],
-    stock: 50,
+    stock: 10,
     active: true,
     tags: ["nuevo"]
   },
   {
     id: "score-mojito",
     name: "Score Mojito",
-    price: 1290,
+    price: 2000,
     category: "Bebidas",
     description: "Bebida energética Score sabor Mojito.",
     images: [
       "https://i.ibb.co/8LftwScD/score-mojito-portada.png",
       "https://i.ibb.co/5h7dcjdk/score-mojito.png"
     ],
-    stock: 30,
+    stock: 24,
     active: true,
-    tags: []
+    tags: ["nuevo"]
   },
   {
     id: "bebida-pepsi",
     name: "Pepsi",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Pepsi.",
     images: [
       "https://i.ibb.co/7xbmMqry/bebida-pepsi.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "bebida-pap",
     name: "Pap",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Pap.",
     images: [
       "https://i.ibb.co/p8fH4VP/bebida-pap.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "bebida-limon-soda",
     name: "Limón Soda",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Limón Soda.",
     images: [
       "https://i.ibb.co/bg8v5FQt/bebida-limon-soda.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "bebida-kem",
     name: "Kem",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Kem.",
     images: [
       "https://i.ibb.co/tPMx4Xtq/bebida-kem.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "bebida-fanta",
     name: "Fanta",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Fanta.",
     images: [
       "https://i.ibb.co/Kj1R7d3K/bebida-fanta.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "bebida-coca-cola",
     name: "Coca-Cola",
-    price: 1200,
+    price: 1500,
     category: "Bebidas",
     description: "Bebida Coca-Cola.",
     images: [
       "https://i.ibb.co/F4Sjwscr/bebida-coca-cola.png"
     ],
-    stock: 40,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "triton-vainilla",
     name: "Tritón Vainilla",
-    price: 690,
+    price: 1000,
     category: "Alimentos",
     description: "Galletas Tritón sabor vainilla.",
     images: [
       "https://i.ibb.co/gL809qr4/triton-vainilla-1.png",
       "https://i.ibb.co/NgvcmVXN/triton-vainilla.png"
     ],
-    stock: 35,
+    stock: 15,
     active: true,
     tags: []
   },
   {
     id: "score-morado",
     name: "Score Morado",
-    price: 1290,
+    price: 2000,
     category: "Bebidas",
     description: "Bebida energética Score sabor morado.",
     images: [
       "https://i.ibb.co/fdywW12J/score-morado.png"
     ],
-    stock: 30,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "drive-gift-clip",
     name: "Drive Gift con clip cigarro",
-    price: 2500,
+    price: 2000,
     category: "Otros",
     description: "Drive Gift con clip para cigarro.",
     images: [
       "https://i.ibb.co/ksFr4DPt/drive-gift-con-clip-cigarro.png"
     ],
-    stock: 15,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "drive-eight-clip",
     name: "Drive Eight con clip cigarro",
-    price: 2500,
+    price: 2000,
     category: "Otros",
     description: "Drive Eight con clip para cigarro.",
     images: [
       "https://i.ibb.co/RG0V9F0H/drive-eight-con-clip-cigarro.png"
     ],
-    stock: 15,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "barra-cereal-chips-chocolate",
     name: "Barra de cereal con chips de chocolate",
-    price: 890,
+    price: 500,
     category: "Alimentos",
     description: "Barra de cereal con chips de chocolate.",
     images: [
       "https://i.ibb.co/2YYHSxwQ/barra-de-cereal-con-chips-de-chocolate.png"
     ],
-    stock: 40,
+    stock: 8,
     active: true,
     tags: []
   },
   {
     id: "barra-cereal-chocolate",
     name: "Barra de cereal de chocolate",
-    price: 890,
+    price: 500,
     category: "Alimentos",
     description: "Barra de cereal sabor chocolate.",
     images: [
       "https://i.ibb.co/5hNZFw7d/barra-de-cereal-de-chocolate.png"
     ],
-    stock: 40,
+    stock: 8,
     active: true,
     tags: []
   },
   {
     id: "barra-cereal-frutos-rojos",
     name: "Barra de cereal frutos rojos",
-    price: 890,
+    price: 500,
     category: "Alimentos",
     description: "Barra de cereal de frutos rojos.",
     images: [
       "https://i.ibb.co/bgPGtT8V/barra-de-cereal-frutos-rojos.png"
     ],
-    stock: 40,
+    stock: 8,
     active: true,
     tags: []
   },
   {
     id: "barra-cereal-miel",
     name: "Barra de cereal con miel",
-    price: 890,
+    price: 500,
     category: "Alimentos",
     description: "Barra de cereal con miel.",
     images: [
       "https://i.ibb.co/p6kSDPDZ/barra-de-cereal-con-miel.png"
     ],
-    stock: 40,
+    stock: 8,
     active: true,
     tags: []
   },
   {
     id: "nik-chirimoya",
     name: "Nik Chirimoya",
-    price: 690,
+    price: 1000,
     category: "Alimentos",
     description: "Galletas Nik sabor chirimoya.",
     images: [
       "https://i.ibb.co/nNLWgQRt/nik-chirimolla.png",
       "https://i.ibb.co/Jw0TpjKj/nik-chhirimolla2.png"
     ],
-    stock: 35,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "nik-frutilla",
     name: "Nik Frutilla",
-    price: 690,
+    price: 1000,
     category: "Alimentos",
     description: "Galletas Nik sabor frutilla.",
     images: [
       "https://i.ibb.co/8gF0H9yg/nik-frutilla.png"
     ],
-    stock: 35,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "nik-limon",
     name: "Nik Limón",
-    price: 690,
+    price: 1000,
     category: "Alimentos",
     description: "Galletas Nik sabor limón.",
     images: [
       "https://i.ibb.co/bgq0rj0m/nik-limon.png"
     ],
-    stock: 35,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "nik-vainilla",
     name: "Nik Vainilla",
-    price: 690,
+    price: 1000,
     category: "Alimentos",
     description: "Galletas Nik sabor vainilla.",
     images: [
       "https://i.ibb.co/3YhQFBt5/nik-vainilla.png"
     ],
-    stock: 35,
+    stock: 12,
     active: true,
     tags: []
   },
   {
     id: "monster",
     name: "Monster Energy",
-    price: 1990,
+    price: 2500,
     category: "Bebidas",
     description: "Bebida energética Monster.",
     images: [
       "https://i.ibb.co/d4PDsB6t/monster.png"
     ],
-    stock: 25,
+    stock: 24,
     active: true,
     tags: ["hot"]
   },
   {
     id: "score-amarillo",
     name: "Score Amarillo",
-    price: 1290,
+    price: 2000,
     category: "Bebidas",
     description: "Bebida energética Score sabor amarillo.",
     images: [
       "https://i.ibb.co/nsfn5SZf/score-amarillo.png"
     ],
-    stock: 30,
+    stock: 24,
     active: true,
     tags: []
   },
   {
     id: "score-chicle",
     name: "Score Chicle",
-    price: 1290,
+    price: 2000,
     category: "Bebidas",
     description: "Bebida energética Score sabor chicle.",
     images: [
       "https://i.ibb.co/tMnqq6nV/score-chicle.png"
     ],
-    stock: 30,
+    stock: 24,
     active: true,
     tags: []
   },
