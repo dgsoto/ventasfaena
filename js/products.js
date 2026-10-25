@@ -30,131 +30,318 @@
 
 window.PRODUCTS = [
   {
-    id: "guantes-nitrilo",
-    name: "Guantes de Nitrilo (caja x100)",
-    price: 6990,
-    compareAtPrice: 8990,
-    category: "Seguridad",
-    description: "Guantes de nitrilo azul, talla M/L. Resistentes a químicos y aceites. Ideal para faena.",
-    images: [
-      "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=600&q=80",
-      "https://images.unsplash.com/photo-1607613009820-a29f7bb81c4e?w=600&q=80"
-    ],
-    stock: 25,
+    id: "frac-chocolate",
+    name: "Frac Chocolate Costa",
+    price: 1000,
+    category: "Alimentos",
+    description: "Galleta Frac rellena de chocolate Costa...",
+    images: ["https://i.ibb.co/8LmqTs7g/frac-chocolate.png"],
+    stock: 50,
     active: true,
-    tags: ["oferta", "cyber-day"]
+    tags: ["nuevo"]
   },
-  {
-    id: "casco-seguridad",
-    name: "Casco de Seguridad",
-    price: 12990,
-    category: "Seguridad",
-    description: "Casco industrial con suspensión ajustable. Colores: blanco, amarillo, naranja.",
+    {
+    id: "frac-chocolate-frutilla",
+    name: "Frac Chocolate y Frutilla Costa",
+    price: 590,
+    category: "Alimentos",
+    description: "Galleta Frac Costa sabor chocolate y frutilla. Ideal para la colación.",
     images: [
-      "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80"
+      "https://i.ibb.co/HD4QrTKd/fracchocolate-y-frutilla.png"
     ],
-    stock: 12,
+    stock: 50,
     active: true,
     tags: ["nuevo"]
   },
   {
-    id: "lentes-seguridad",
-    name: "Lentes de Seguridad",
-    price: 4990,
-    category: "Seguridad",
-    description: "Lentes transparentes con protección UV y anti-rayaduras. Cómodos para uso prolongado.",
+    id: "score-mojito",
+    name: "Score Mojito",
+    price: 1290,
+    category: "Bebidas",
+    description: "Bebida energética Score sabor Mojito.",
     images: [
-      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&q=80",
-      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80"
+      "https://i.ibb.co/8LftwScD/score-mojito-portada.png",
+      "https://i.ibb.co/5h7dcjdk/score-mojito.png"
+    ],
+    stock: 30,
+    active: true,
+    tags: []
+  },
+  {
+    id: "bebida-pepsi",
+    name: "Pepsi",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Pepsi.",
+    images: [
+      "https://i.ibb.co/7xbmMqry/bebida-pepsi.png"
     ],
     stock: 40,
     active: true,
     tags: []
   },
   {
-    id: "botella-agua",
-    name: "Botella de Agua 1L",
-    price: 1990,
-    category: "Hidratación",
-    description: "Botella reutilizable de acero inoxidable. Mantiene frío/calor. Perfecta para el turno.",
+    id: "bebida-pap",
+    name: "Pap",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Pap.",
     images: [
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&q=80"
+      "https://i.ibb.co/p8fH4VP/bebida-pap.png"
     ],
-    stock: 0,
+    stock: 40,
     active: true,
     tags: []
   },
   {
-    id: "snack-pack",
-    name: "Pack Snacks Energéticos",
-    price: 2990,
-    compareAtPrice: 3500,
-    category: "Alimentos",
-    description: "Incluye barras de cereal, frutos secos y geles energéticos. Ideal para medias jornadas.",
+    id: "bebida-limon-soda",
+    name: "Limón Soda",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Limón Soda.",
     images: [
-      "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&q=80",
-      "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=600&q=80"
+      "https://i.ibb.co/bg8v5FQt/bebida-limon-soda.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "bebida-kem",
+    name: "Kem",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Kem.",
+    images: [
+      "https://i.ibb.co/tPMx4Xtq/bebida-kem.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "bebida-fanta",
+    name: "Fanta",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Fanta.",
+    images: [
+      "https://i.ibb.co/Kj1R7d3K/bebida-fanta.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "bebida-coca-cola",
+    name: "Coca-Cola",
+    price: 1200,
+    category: "Bebidas",
+    description: "Bebida Coca-Cola.",
+    images: [
+      "https://i.ibb.co/F4Sjwscr/bebida-coca-cola.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "triton-vainilla",
+    name: "Tritón Vainilla",
+    price: 690,
+    category: "Alimentos",
+    description: "Galletas Tritón sabor vainilla.",
+    images: [
+      "https://i.ibb.co/gL809qr4/triton-vainilla-1.png",
+      "https://i.ibb.co/NgvcmVXN/triton-vainilla.png"
+    ],
+    stock: 35,
+    active: true,
+    tags: []
+  },
+  {
+    id: "score-morado",
+    name: "Score Morado",
+    price: 1290,
+    category: "Bebidas",
+    description: "Bebida energética Score sabor morado.",
+    images: [
+      "https://i.ibb.co/fdywW12J/score-morado.png"
     ],
     stock: 30,
     active: true,
-    tags: ["black-friday", "oferta"]
+    tags: []
   },
   {
-    id: "polera-faena",
-    name: "Polera Dry-Fit Faena",
-    price: 9990,
-    category: "Ropa",
-    description: "Polera técnica de secado rápido. Tallas S a XXL. Color navy con logo discreto.",
+    id: "drive-gift-clip",
+    name: "Drive Gift con clip cigarro",
+    price: 2500,
+    category: "Otros",
+    description: "Drive Gift con clip para cigarro.",
     images: [
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80"
+      "https://i.ibb.co/ksFr4DPt/drive-gift-con-clip-cigarro.png"
     ],
-    stock: 18,
+    stock: 15,
     active: true,
-    tags: ["nuevo"]
+    tags: []
   },
   {
-    id: "linterna-led",
-    name: "Linterna LED Recargable",
-    price: 14990,
-    category: "Herramientas",
-    description: "1200 lúmenes, zoom ajustable, batería 5000mAh. Incluye cable USB-C. Mira el video de demostración.",
+    id: "drive-eight-clip",
+    name: "Drive Eight con clip cigarro",
+    price: 2500,
+    category: "Otros",
+    description: "Drive Eight con clip para cigarro.",
     images: [
-      "https://images.unsplash.com/photo-1503694978374-8a2fa272b05f?w=600&q=80",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+      "https://i.ibb.co/RG0V9F0H/drive-eight-con-clip-cigarro.png"
     ],
-    // Ejemplo YouTube (reemplaza por tu video real)
-    video: "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
-    stock: 8,
+    stock: 15,
+    active: true,
+    tags: []
+  },
+  {
+    id: "barra-cereal-chips-chocolate",
+    name: "Barra de cereal con chips de chocolate",
+    price: 890,
+    category: "Alimentos",
+    description: "Barra de cereal con chips de chocolate.",
+    images: [
+      "https://i.ibb.co/2YYHSxwQ/barra-de-cereal-con-chips-de-chocolate.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "barra-cereal-chocolate",
+    name: "Barra de cereal de chocolate",
+    price: 890,
+    category: "Alimentos",
+    description: "Barra de cereal sabor chocolate.",
+    images: [
+      "https://i.ibb.co/5hNZFw7d/barra-de-cereal-de-chocolate.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "barra-cereal-frutos-rojos",
+    name: "Barra de cereal frutos rojos",
+    price: 890,
+    category: "Alimentos",
+    description: "Barra de cereal de frutos rojos.",
+    images: [
+      "https://i.ibb.co/bgPGtT8V/barra-de-cereal-frutos-rojos.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "barra-cereal-miel",
+    name: "Barra de cereal con miel",
+    price: 890,
+    category: "Alimentos",
+    description: "Barra de cereal con miel.",
+    images: [
+      "https://i.ibb.co/p6kSDPDZ/barra-de-cereal-con-miel.png"
+    ],
+    stock: 40,
+    active: true,
+    tags: []
+  },
+  {
+    id: "nik-chirimoya",
+    name: "Nik Chirimoya",
+    price: 690,
+    category: "Alimentos",
+    description: "Galletas Nik sabor chirimoya.",
+    images: [
+      "https://i.ibb.co/nNLWgQRt/nik-chirimolla.png",
+      "https://i.ibb.co/Jw0TpjKj/nik-chhirimolla2.png"
+    ],
+    stock: 35,
+    active: true,
+    tags: []
+  },
+  {
+    id: "nik-frutilla",
+    name: "Nik Frutilla",
+    price: 690,
+    category: "Alimentos",
+    description: "Galletas Nik sabor frutilla.",
+    images: [
+      "https://i.ibb.co/8gF0H9yg/nik-frutilla.png"
+    ],
+    stock: 35,
+    active: true,
+    tags: []
+  },
+  {
+    id: "nik-limon",
+    name: "Nik Limón",
+    price: 690,
+    category: "Alimentos",
+    description: "Galletas Nik sabor limón.",
+    images: [
+      "https://i.ibb.co/bgq0rj0m/nik-limon.png"
+    ],
+    stock: 35,
+    active: true,
+    tags: []
+  },
+  {
+    id: "nik-vainilla",
+    name: "Nik Vainilla",
+    price: 690,
+    category: "Alimentos",
+    description: "Galletas Nik sabor vainilla.",
+    images: [
+      "https://i.ibb.co/3YhQFBt5/nik-vainilla.png"
+    ],
+    stock: 35,
+    active: true,
+    tags: []
+  },
+  {
+    id: "monster",
+    name: "Monster Energy",
+    price: 1990,
+    category: "Bebidas",
+    description: "Bebida energética Monster.",
+    images: [
+      "https://i.ibb.co/d4PDsB6t/monster.png"
+    ],
+    stock: 25,
     active: true,
     tags: ["hot"]
   },
   {
-    id: "protector-solar",
-    name: "Protector Solar FPS 50+",
-    price: 7990,
-    category: "Cuidado",
-    description: "Crema resistente al agua y sudor. 200ml. Ideal para trabajos al aire libre.",
+    id: "score-amarillo",
+    name: "Score Amarillo",
+    price: 1290,
+    category: "Bebidas",
+    description: "Bebida energética Score sabor amarillo.",
     images: [
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80"
+      "https://i.ibb.co/nsfn5SZf/score-amarillo.png"
     ],
-    stock: 22,
+    stock: 30,
     active: true,
-    tags: ["envio-gratis"]
+    tags: []
   },
-  // Ejemplo de producto INACTIVO: no aparece en el catálogo hasta que pongas active: true
   {
-    id: "chaleco-reflectante",
-    name: "Chaleco Reflectante",
-    price: 5990,
-    category: "Seguridad",
-    description: "Chaleco alta visibilidad. Próximamente disponible.",
+    id: "score-chicle",
+    name: "Score Chicle",
+    price: 1290,
+    category: "Bebidas",
+    description: "Bebida energética Score sabor chicle.",
     images: [
-      "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80"
+      "https://i.ibb.co/tMnqq6nV/score-chicle.png"
     ],
-    stock: 0,
-    active: false,
-    tags: ["nuevo"]
-  }
+    stock: 30,
+    active: true,
+    tags: []
+  },
 ];
 
 // Solo categorías de productos activos
